@@ -1,0 +1,16 @@
+<form name = "petrolForm" action="." method="POST">
+    <label>Petrol Tax: </label>
+    <input type="text" name="tax">
+    <label>Average Income: </label>
+    <input type="text" name="income">
+    <label>Paved Highways: </label>
+    <input type="text" name="highways">
+    <label>Driver License Percentage: </label>
+    <input type="text" name="license">
+    <input type="submit" value="Submit">
+</form>
+
+{% if res %}
+    <h2>Result: </h2>
+    <p id="result">{{ res }}</p>
+{% endif %}
