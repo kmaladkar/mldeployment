@@ -22,11 +22,9 @@ prediction_score_hist = Histogram('prediction_score_distribution', 'Distribution
 prediction_latency_hist = Histogram('prediction_latency_distribution', 'Distribution of prediction response latency')
 
 
-model_dir = os.path.abspath('../models')
-model = pickle.load(open(model_dir+'/model.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
-template_dir = os.path.abspath('../templates')
-app = Flask(__name__, template_folder=template_dir)
+app = Flask(__name__, template_folder=".")
 metrics_app = make_asgi_app()
 
 @app.route('/')
@@ -42,7 +40,7 @@ def getvalue():
     res = model.predict([[taxUser, incomeUser, highwaysUser, licenseUser]])
     return render_template('index.html', res = res)
 
-@app.route('/prediction', methods =['GET','POST'])
+@app.route('/prediction_api', methods =['GET','POST'])
 def predict():
     """function to predict
 
@@ -75,7 +73,7 @@ def predict():
     
     return response
 
-@app.route("/model_information", methods =['GET'])
+@app.route("/model_information", methods =['POST'])
 def model_information():
     '''
     Get the model's parameters
@@ -86,4 +84,4 @@ def model_information():
     return model.get_params()
     
 if __name__ =='__main__':
-    app.run(debug=True)
+    app.run('0.0.0.0', 8000, debug=True)    
